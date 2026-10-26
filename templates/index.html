@@ -1,0 +1,131 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Cursos | Academia{% endblock %}
+
+{% block contenido %}
+
+<header class="text-center mb-5">
+    <h1 class="text-warning mb-3">🎓 Cursos Online</h1>
+
+    <p class="lead">
+        Plataforma de gestión de cursos online
+    </p>
+</header>
+
+<section>
+
+
+    <div class="d-flex flex-column flex-lg-row justify-content-between
+                align-items-lg-center gap-3 mb-3">
+
+        <h2 class="h4 mb-0">Cursos registrados</h2>
+
+        <div class="d-flex flex-wrap align-items-center gap-2">
+
+            <span class="badge text-bg-secondary">
+                Resultados: {{ cursos|length }}
+            </span>
+
+            <a href="{{ url_for('agregar_curso') }}"
+               class="btn btn-warning btn-sm">
+                + Agregar curso
+            </a>
+
+        </div>
+    </div>
+
+    <form method="GET" action="{{ url_for('inicio') }}" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="search"
+                name="buscar"
+                class="form-control"
+                placeholder="Buscar por curso o instructor..."
+                value="{{ termino }}"
+                aria-label="Buscar por curso o instructor"
+            >
+
+            <button type="submit" class="btn btn-outline-warning">
+                <i class="bi bi-search"></i> Buscar
+            </button>
+
+            {% if termino %}
+                <a href="{{ url_for('inicio') }}"
+                   class="btn btn-outline-secondary">
+                    Limpiar
+                </a>
+            {% endif %}
+
+        </div>
+
+        <small class="text-body-secondary d-block mt-2">
+            Puedes buscar por una parte del nombre del curso o del instructor.
+        </small>
+
+    </form>
+
+
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover align-middle">
+
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Instructor</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for curso in cursos %}
+                <tr>
+                    <td>{{ curso.id_curso }}</td>
+                    <td>{{ curso.nombre }}</td>
+                    <td>{{ curso.instructor }}</td>
+                    <td>{{ "%.2f"|format(curso.duracion) }} horas</td>
+
+
+                    <td>
+                        <div class="d-flex gap-2">
+
+                            <a href="{{ url_for('editar_curso', id_curso=curso.id_curso) }}"
+                               class="btn btn-outline-warning btn-sm">
+                                Editar
+                            </a>
+
+                            <form method="POST"
+                                  action="{{ url_for('eliminar_curso', id_curso=curso.id_curso) }}"
+                                  onsubmit="return confirm('¿Estás seguro de que deseas eliminar este curso? Esta acción no se puede deshacer.');">
+
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    Eliminar
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </td>
+
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-4">
+                        Todavía no hay cursos registrados.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</section>
+
+{% endblock %}

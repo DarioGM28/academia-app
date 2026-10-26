@@ -1,0 +1,196 @@
+🧠 PROYECTO academia – CRUD PASO A PASO
+
+prompt para IA
+============================================
+
+📣 INSTRUCCIONES GENERALES
+---------------------------
+Quiero que actúes como mi mentor experto en Flask.
+Vamos a construir paso a paso un CRUD completo con Flask, Bootstrap y MySQL,
+siguiendo las fases dentro de esta misma conversación (sin saltar ninguna).
+
+Después de cada fase, debes esperar a que yo confirme con la palabra “listo”
+antes de avanzar a la siguiente. Así el proceso será completamente interactivo.
+
+
+🧩 DESCRIPCIÓN GENERAL
+-----------------------
+Crearemos un Sistema de Cursos Online llamado **Academia**,
+para registrar cursos (un portal web educativo).
+
+Las explicaciones deben ser claras, simples y didácticas,
+pero detalladas cuando sea necesario, con ejemplos y código completo listo para copiar y pegar.
+
+
+📌 OBJETIVO
+------------
+Generar una guía paso a paso para crear mi aplicación **Academia**,
+usando **Windows** como sistema operativo y **PyCharm** como IDE.
+
+
+⚙️ TECNOLOGÍAS Y DEPENDENCIAS
+-------------------------------
+Usaremos las siguientes dependencias principales:
+
+- flask
+- flask-sqlalchemy
+- flask-migrate
+- pymysql
+- python-dotenv
+- flask-wtf
+- y cualquier otra que sea necesaria para completar correctamente el CRUD.
+
+
+🧱 ESTRUCTURA BASE DE ARCHIVOS
+-------------------------------
+La aplicación debe tener esta estructura inicial:
+
+academia_app/
+│
+├── app.py
+├── extensions.py
+├── models.py
+├── .env
+├── services/
+│   ├── __init__.py
+│   └── curso_service.py
+└── templates/
+    └── index.html
+
+
+📁 Descripción:
+- app.py → configuración principal y rutas.
+- extensions.py → inicialización de SQLAlchemy y Migrate.
+- models.py → definición del modelo Curso.
+- curso_service.py → capa de servicios que contiene toda la lógica CRUD.
+- index.html → vista principal con modo oscuro y Bootstrap.
+
+📌 La lógica de negocio NO debe ir en app.py, sino en la capa de servicios (services/curso_service.py),
+para aplicar una arquitectura limpia y modular.
+
+
+🧩 BASE DE DATOS
+-----------------
+Nombre de la base de datos:
+- academia_db
+
+Tabla a crear:
+- idCurso (autoincrementable)
+- curso (string)
+- instructor (string)
+- duracion (decimal)
+
+Parámetros de conexión (solo para pruebas):
+usuario: root
+password: password
+puerto: 3306
+server: localhost
+
+⚠️ Recomendar cambiar usuario y contraseña al finalizar el proyecto por seguridad.
+
+Los valores deben definirse por separado en el archivo .env,
+y después se debe construir la cadena de conexión a partir de ellos dentro de app.py.
+
+
+🧭 FASES DEL PROYECTO
+======================
+
+FASE 1: PREPARACIÓN E INSTALACIÓN
+----------------------------------
+- Instalar todo lo necesario y crear el proyecto base.
+- Usaremos PyCharm, asi que puedes omitir los pasos de creacion de ambientes virtuales, esto no es necesario
+- Configurar Flask y un index.html básico con Bootstrap en modo oscuro.
+- El título debe ser “Academia” centrado, en color amarillo, con un ícono educativo (🎓) al lado.
+- Mostrar una plantilla mínima que cargue correctamente Flask.
+- El modo oscuro de bootstrap debe manejarse asi: <html lang="es" data-bs-theme="dark"> a nivel de toda la pagina
+- No agregar estilos css personalizados, sino usar los estilos de bootstrap
+- Si se crea el archivo .env, agregar la advertencia de que NO debe tener ninguna extensión (.py, .txt, etc).
+
+
+FASE 2: CONEXIÓN CON MYSQL
+---------------------------
+- Instalar dependencias para MySQL y SQLAlchemy.
+- Crear el archivo extensions.py para inicializar db y migrate.
+- Configurar la conexión a MySQL usando las variables del archivo .env.
+- Crear la base de datos si aún no existe.
+- Verificar la conexión ejecutando el proyecto y mostrando el index.
+- Si aparece error, revisar que .env esté sin extensión y en la raíz del proyecto.
+
+
+FASE 3: CREACIÓN DEL MODELO
+----------------------------
+- Crear el archivo models.py con la clase Curso.
+- Definir sus columnas: id_curso, nombre, instructor, duracion.
+- Generar y aplicar las migraciones con:
+  flask db init
+  flask db migrate
+  flask db upgrade
+- Explicar cómo confirmar que la tabla se creó correctamente en MySQL Workbench.
+- La app debe seguir ejecutándose correctamente (aunque todavía sin CRUD visible).
+
+
+FASE 4: CASO DE LISTAR (READ)
+------------------------------
+- Implementar la función de listar cursos usando la capa de servicios (curso_service.py).
+- La lógica de obtener cursos debe estar en una función llamada obtener_todos().
+- app.py solo debe llamar al servicio y pasar los datos a index.html.
+- El listado de cursos debe mostrarse directamente en index.html (no en otra página).
+- Recomendar agregar algunos registros de prueba desde MySQL Workbench.
+- Mostrar la tabla en un diseño simple, moderno y en modo oscuro con Bootstrap.
+
+
+FASE 5: CASO AGREGAR (CREATE)
+------------------------------
+- Agregar el comando para agregar la libreria de Flask-WTF
+- Para esta fase agregar una barra de navegación con Bootstrap.
+- Crear un formulario con Flask-WTF para agregar nuevos cursos en una nueva pagina (agregar_curso.html).
+- La lógica de inserción debe estar en curso_service.py (por ejemplo agregar_curso()).
+- Probar que al agregar un curso, se actualice automáticamente el listado.
+
+
+FASE 6: CASO EDITAR (UPDATE)
+-----------------------------
+- Implementar formulario para modificar cursos existentes en un nuevo archivo (editar_curso.html)
+- Reutilizar el mismo formulario de agregar, precargado con los datos del curso.
+- La lógica de actualización debe estar en curso_service.py (editar_curso()).
+- Validar que los cambios se reflejen correctamente en la tabla.
+
+
+FASE 7: CASO ELIMINAR (DELETE)
+-------------------------------
+- Agregar un botón “Eliminar” junto a cada curso.
+- Confirmar la eliminación con una alerta modal de Bootstrap.
+- La lógica de borrado debe estar en curso_service.py (eliminar_curso()).
+- Mostrar mensaje de éxito tras eliminar y refrescar la tabla.
+
+
+📋 EN CADA FASE DEBES INCLUIR
+------------------------------
+1. Lista de comandos o pasos exactos a ejecutar.
+2. Archivos a crear o modificar (con rutas completas).
+3. Código completo y actualizado (listo para copiar y pegar).
+4. Explicación clara de por qué se hace cada parte.
+5. Prueba rápida (qué ruta visitar o acción realizar).
+6. Soluciones a errores típicos.
+7. No pedir crear archivos que aún no se van a usar; indicarlos solo en la fase correspondiente.
+
+
+⚙️ REQUISITOS TÉCNICOS
+-----------------------
+- Usar Flask moderno y buenas prácticas de estructura modular.
+- El proyecto se debe crear en: C:\Cursos\Flask\FlaskAcademy
+- No usar archivos estáticos locales (static/), ya que Bootstrap se cargará desde CDN.
+- Cada fase debe mostrar el código completo de los archivos modificados (no fragmentos).
+- No debes pedir crear todos los archivos desde un inicio, sino espera a crearlos en cada fase segun corresponda
+- Indica si es archivo nuevo o ya existente y debe modificar solamente
+- Explica brevemente que hace cada archivo y su razon de usarlo, por ejemplo el SECRET_KEY para que se usa
+  y así una breve explicación de lo que contiene cada archivo y su razon de ser
+- Tener cuidado con el orden, no deben aparecer primero comandos a ejecutar sobre todo si aún no se ha creado el
+  código que van a usar dichos comandos, sobre todo en el tema de migraciones, primero debe crearse el codigo
+  y despues los comandos respectivos de migracion, y asi en toda la aplicacion
+- Después de cada fase, esperar mi confirmación con “listo” antes de avanzar.
+
+
+🚀 INICIO
+----------
+Comienza ahora con la FASE 1.
