@@ -41,8 +41,8 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/DarioGM28/academia-app-flask.git
-cd academia-app-flask
+git clone https://github.com/DarioGM28/academia-app.git
+cd academia-app
 ```
 
 ### 2. Crear un entorno virtual
